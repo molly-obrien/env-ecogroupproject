@@ -91,3 +91,27 @@ ggplot(subset(data, city != "West Los Angeles"),
   xlab("Outdoor Temperature") +
   ylab("log(Ozone level)") +
   ggtitle("log(Ozone) vs Outdoor Temperature (by city, excluding West Los Angeles)")
+
+
+
+# log(Weather)
+
+# log(Ozone) against Wind Speed, with missing values removed
+ggplot(subset(data, !is.na(Wind.Speed...Resultant)),
+       aes(x = log_wind_speed, y = logOzone)) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(method = "loess", se = FALSE, colour = "purple") +
+  xlab("Wind Speed (Resultant)") +
+  ylab("log(Ozone level)") +
+  ggtitle("log(Ozone) vs Wind Speed (missing values removed)")
+
+
+# log(Ozone) against Wind Speed by city, with missing values removed
+ggplot(subset(data, !is.na(Wind.Speed...Resultant)),
+       aes(x = log_wind_speed, y = logOzone)) +
+  geom_jitter(alpha = 0.25) +
+  geom_smooth(method = "loess", se = FALSE, colour = "purple") +
+  facet_wrap(~ city) +
+  xlab("Wind Speed (Resultant)") +
+  ylab("log(Ozone level)") +
+  ggtitle("log(Ozone) vs Wind Speed (Resultant) (by city)")
