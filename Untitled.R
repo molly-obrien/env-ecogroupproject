@@ -71,7 +71,7 @@ df_max <- df %>% summarise(df_max= max(df),.by=year)
 # PLOTS FOR MEASURING log(OZONE) AGAINST THE METEROLOGICAL COVARIATES
 
 
-# Weather Variable
+# Temperature Variable
 
 # Overall log(Ozone) against Outdoor Temperature, where we have omitted West Los Angeles
 ggplot(subset(data, city != "West Los Angeles"), aes(x = Outdoor.Temperature, y = logOzone)) +
