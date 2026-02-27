@@ -1,4 +1,5 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 ### LOADING IN THE DATA AND PACKAGES ###
 # the packages
 library(ggplot2)
@@ -37,6 +38,8 @@ colMeans(is.na(df)) * 100
 # 1.3.2 Replace NA with median for all remaining numeric columns
 df[] <- lapply(df, function(x) {
 =======
+=======
+>>>>>>> Stashed changes
 #hello everyone! changed
 
 data<- read.csv("data.csv")
@@ -58,6 +61,9 @@ data$Barometric.pressure <- NULL
 
 # Replace NA with median for all remaining numeric columns
 data[] <- lapply(data, function(x) {
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   if(is.numeric(x)) {
     x[is.na(x)] <- median(x, na.rm = TRUE)
@@ -65,6 +71,7 @@ data[] <- lapply(data, function(x) {
   return(x)
 })
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 # 1.4 Visualising the transformed and imputed data
 grid.arrange(
@@ -117,6 +124,8 @@ ggplot(subset(data, city != "West Los Angeles"),
   ylab("log(Ozone level)") +
   ggtitle("log(Ozone) vs Outdoor Temperature (by city, excluding West Los Angeles)")
 =======
+=======
+>>>>>>> Stashed changes
 colMeans(is.na(data)) * 100
 
 names(data)
@@ -160,4 +169,7 @@ ggplot(data=data,aes(y=logOzone,x=date))+
   labs(y="log ozone")
 
 names(data)
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
