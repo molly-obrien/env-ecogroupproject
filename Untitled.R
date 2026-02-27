@@ -61,3 +61,33 @@ ggplot(data=df[],aes(y=log_Ozone,x=date, color = city)) +
 ################################################################################
 # 2.1 getting the maximum each year (need to do for each city)
 df_max <- df %>% summarise(df_max= max(df),.by=year)
+
+
+
+
+
+
+
+# PLOTS FOR MEASURING log(OZONE) AGAINST THE METEROLOGICAL COVARIATES
+
+
+# Weather Variable
+
+# Overall log(Ozone) against Outdoor Temperature, where we have omitted West Los Angeles
+ggplot(subset(data, city != "West Los Angeles"), aes(x = Outdoor.Temperature, y = logOzone)) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(method = "loess", se = FALSE, colour = "purple") +
+  xlab("Outdoor Temperature") +
+  ylab("log(Ozone level)") +
+  ggtitle("log(Ozone) vs Outdoor Temperature")
+
+
+# log(Ozone) against Outdoor Temperature, where we have omitted West Los Angeles
+ggplot(subset(data, city != "West Los Angeles"),
+       aes(x = Outdoor.Temperature, y = logOzone)) +
+  geom_point(alpha = 0.25) +
+  geom_smooth(method = "loess", se = FALSE, colour = "purple") +
+  facet_wrap(~ city) +
+  xlab("Outdoor Temperature") +
+  ylab("log(Ozone level)") +
+  ggtitle("log(Ozone) vs Outdoor Temperature (by city, excluding West Los Angeles)")
