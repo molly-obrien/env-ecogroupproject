@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ### LOADING IN THE DATA AND PACKAGES ###
 # the packages
 library(ggplot2)
@@ -35,12 +36,36 @@ colMeans(is.na(df)) * 100
 
 # 1.3.2 Replace NA with median for all remaining numeric columns
 df[] <- lapply(df, function(x) {
+=======
+#hello everyone! changed
+
+data<- read.csv("data.csv")
+
+mean(is.na(data)) * 100
+
+names(data)
+
+str(data)
+
+plot(density(data$Ozone, na.rm = TRUE))
+
+#use median since ozone factor is slightly skewed#
+
+colMeans(is.na(data)) * 100
+
+# Remove the column due to 89% na values 
+data$Barometric.pressure <- NULL
+
+# Replace NA with median for all remaining numeric columns
+data[] <- lapply(data, function(x) {
+>>>>>>> Stashed changes
   if(is.numeric(x)) {
     x[is.na(x)] <- median(x, na.rm = TRUE)
   }
   return(x)
 })
 
+<<<<<<< Updated upstream
 # 1.4 Visualising the transformed and imputed data
 grid.arrange(
   ggplot(df, aes(city)) + geom_bar(fill = 'lightblue', color = 'blue'),
@@ -91,3 +116,48 @@ ggplot(subset(data, city != "West Los Angeles"),
   xlab("Outdoor Temperature") +
   ylab("log(Ozone level)") +
   ggtitle("log(Ozone) vs Outdoor Temperature (by city, excluding West Los Angeles)")
+=======
+colMeans(is.na(data)) * 100
+
+names(data)
+unique(data$city)
+
+data$logOzone <- log(data$Ozone)
+
+ggplot(data, aes(x = city, y = logOzone)) +
+  geom_boxplot(fill = "purple") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  xlab("City")+
+  ylab("log Ozone level")+
+  ggtitle("Boxplots of Ozone levels by city")
+
+names(data)
+
+#eda for meteorological factors on ozone #
+
+ggplot(data, aes(x=Outdoor.Temperature, y=logOzone))+
+  geom_point()+ geom_smooth()
+
+ggplot(data, aes(x=Wind.Speed...Resultant, y=logOzone))+
+  geom_point()+ geom_smooth()
+
+names(data)
+
+cor_matrix <- cor(data[, sapply(data, is.numeric)])
+
+corrplot::corrplot(cor_matrix, method="color", type="upper", tl.cex=0.8)
+
+
+library(extRemes)
+
+library(extRemes)  # library for GEV models
+library(lubridate) # library to work with dates and time
+library(tidyr)     # library for data tidying
+library(dplyr)     # library for data manipulation 
+
+ggplot(data=data,aes(y=logOzone,x=date))+
+  geom_line(alpha=0.35)+
+  labs(y="log ozone")
+
+names(data)
+>>>>>>> Stashed changes
