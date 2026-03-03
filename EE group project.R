@@ -35,7 +35,7 @@ data$Barometric.pressure <- NULL
 data[] <- lapply(data, function(x) {
   if(is.numeric(x)) {
     x[is.na(x)] <- median(x, na.rm = TRUE)
-    }
+  }
   return(x)
   
 })
@@ -126,7 +126,7 @@ ci(fit_gev, alpha = 0.05, type = c("parameter"))
 
 
 plot(fit_gev, type = "rl")
-# this doesnt look like the model is a very good fit
+# this doesn't look like the model is a very good fit
 # we have a very small n (10) so the return period is uncertain
 
 
@@ -137,22 +137,22 @@ plot(fit_gev, type = "rl")
 
 
 
-# scatterplot of log ozone by year
+# scatter plot of log ozone by year
 
-ggplot(data, aes(x=year, y=log_Ozone))+
+ggplot(data, aes(x=year, y=Ozone))+
   geom_point()
 
 # setting maximum values
 data_yearly_max <- data %>%
   group_by(year) %>%
-  summarise(max_log_ozone = max(log_Ozone), .groups = "drop")
+  summarise(max_ozone = max(Ozone), .groups = "drop")
 
 # scatterplot with maximums highlighted
 
-ggplot(data, aes(x = year, y = log_Ozone)) +
+ggplot(data, aes(x = year, y = Ozone)) +
   geom_point() +
   geom_point(data = data_yearly_max,
-             aes(x = year, y = max_log_ozone),
+             aes(x = year, y = max_ozone),
              colour = "red",
              inherit.aes = FALSE)
 
@@ -162,29 +162,29 @@ ggplot(data, aes(x = year, y = log_Ozone)) +
 data_yearly_max <- data %>%
   group_by(city, year) %>%
   summarise(
-    max_log_ozone = max(log_Ozone),
+    max_ozone = max(Ozone),
     .groups = "drop"
   )
 
-ggplot(data, aes(x = year, y = log_Ozone)) +
+ggplot(data, aes(x = year, y = Ozone)) +
   geom_point() +
   geom_point(data = data_yearly_max,
-             aes(x = year, y = max_log_ozone),
+             aes(x = year, y = max_ozone),
              colour = "red",
              inherit.aes = FALSE) +
   facet_wrap(~ city) +
   theme_minimal() +
-  labs(y = "Log Ozone",
+  labs(y = "Ozone",
        title = "Monthly Ozone with Annual Maxima Highlighted")
 
 
 # plotting the annual maxima per city
-ggplot(data_yearly_max, aes(x = year, y = max_log_ozone)) +
+ggplot(data_yearly_max, aes(x = year, y = max_ozone)) +
   geom_line() +
   geom_point(colour = "red") +
   facet_wrap(~ city) +
   theme_minimal() +
-  labs(y = "Annual Maximum Log Ozone")
+  labs(y = "Annual Maximum Ozone")
 
 
 
@@ -193,35 +193,35 @@ ggplot(data_yearly_max, aes(x = year, y = max_log_ozone)) +
 # subsetting k=3 largest values
 data_top3 <- data %>%
   group_by(city, year) %>%
-  arrange(desc(log_Ozone), .by_group = TRUE) %>%
+  arrange(desc(Ozone), .by_group = TRUE) %>%
   slice_head(n = 3) %>%
   mutate(rank = row_number()) %>%
   ungroup()
 
 
 
-ggplot(data, aes(x = year, y = log_Ozone)) +
+ggplot(data, aes(x = year, y = Ozone)) +
   geom_point() +
   geom_point(
     data = data_top3,
-    aes(x = year, y = log_Ozone, colour = factor(rank)),
+    aes(x = year, y = Ozone, colour = factor(rank)),
     inherit.aes = FALSE
   ) +
   facet_wrap(~ city) +
   theme_minimal() +
   labs(
-    y = "Log Ozone",
+    y = "Ozone",
     title = "Top Three Monthly Ozone Observations per City-Year"
   )
 
 
 # using date as the time variable
 
-ggplot(data, aes(x = date, y = log_Ozone)) +
+ggplot(data, aes(x = date, y = Ozone)) +
   geom_point() +
   geom_point(
     data = data_top3,
-    aes(x = date, y = log_Ozone, colour = factor(rank)),
+    aes(x = date, y = Ozone, colour = factor(rank)),
     inherit.aes = FALSE
   ) +
   facet_wrap(~ city) +
@@ -233,8 +233,7 @@ ggplot(data, aes(x = date, y = log_Ozone)) +
 
 
 
-# extreme ozone level is defined as 
-# what is the unit for ozone?
+
 # is it the mean for that month? -> smooths out peaks
 # US standard is 0.070ppm (epa.gov), anything over that is considered "extreme"
 
@@ -265,8 +264,4 @@ ggplot(exceed_summary, aes(x = year, y = exceed_rate)) +
   labs(y = "Proportion of months above threshold")
 
 # only one city exceeds the regulated standard -> Glendora
-
-
-
-
 
